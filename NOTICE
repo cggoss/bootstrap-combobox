@@ -1,3 +1,5 @@
 
 Bugfix: input quickly several characters without having characters eaten up.
 Writing very fast "abcd", only "ab" was being written in the input combo box.
+
+Bugfix: don't swallows `keyUp` events when `ctrl` key is released.

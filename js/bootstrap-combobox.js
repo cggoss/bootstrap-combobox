@@ -391,9 +391,12 @@
         case 36: // home
         case 35: // end
         case 16: // shift
-        case 17: // ctrl
         case 18: // alt
           break;
+
+        case 17: // ctrl
+          e.preventDefault();
+          return;
 
         case 9: // tab
         case 13: // enter
