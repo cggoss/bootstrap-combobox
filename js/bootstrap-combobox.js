@@ -16,6 +16,9 @@
  * limitations under the License.
  * ============================================================ */
 
+// Changes from the original source are detailed in accompanying ../NOTICE file and in github commits:
+// https://github.com/cggoss/bootstrap-combobox
+
 (function( $ ) {
 
  "use strict";
@@ -363,6 +366,9 @@
   }
 
   , keydown: function (e) {
+      if (this.keyupRenderTimeout) {
+          clearTimeout(this.keyupRenderTimeout);
+      }
       this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27]);
       this.move(e);
     }
@@ -401,8 +407,14 @@
           break;
 
         default:
-          this.clearTarget();
-          this.lookup();
+          if (this.keyupRenderTimeout) {
+              clearTimeout(this.keyupRenderTimeout);
+          }
+          var that = this;
+          this.keyupRenderTimeout = setTimeout(function () {
+              that.clearTarget();
+              that.lookup();
+          }, 200);
       }
 
       e.stopPropagation();

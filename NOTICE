@@ -1,0 +1,3 @@
+
+Bugfix: input quickly several characters without having characters eaten up.
+Writing very fast "abcd", only "ab" was being written in the input combo box.
