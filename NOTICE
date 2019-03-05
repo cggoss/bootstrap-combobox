@@ -3,3 +3,34 @@ Bugfix: input quickly several characters without having characters eaten up.
 Writing very fast "abcd", only "ab" was being written in the input combo box.
 
 Bugfix: don't swallows `keyUp` events when `ctrl` key is released.
+
+Details with diff js/bootstrap-combobox.js.original js/bootstrap-combobox.js:
+----
+
+18a19,21
+> // Changes from the original source are detailed in accompanying ../NOTICE file and in github commits:
+> // https://github.com/cggoss/bootstrap-combobox
+> 
+365a369,371
+>       if (this.keyupRenderTimeout) {
+>           clearTimeout(this.keyupRenderTimeout);
+>       }
+388d393
+<         case 17: // ctrl
+391a397,400
+>         case 17: // ctrl
+>           e.preventDefault();
+>           return;
+> 
+404,405c413,420
+<           this.clearTarget();
+<           this.lookup();
+---
+>           if (this.keyupRenderTimeout) {
+>               clearTimeout(this.keyupRenderTimeout);
+>           }
+>           var that = this;
+>           this.keyupRenderTimeout = setTimeout(function () {
+>               that.clearTarget();
+>               that.lookup();
+>           }, 200);
